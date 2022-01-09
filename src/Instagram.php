@@ -15,6 +15,11 @@ class Instagram
      */
     const API_OAUTH_URL = 'https://api.instagram.com/oauth/authorize';
 
+    /**
+     * The OAuth token URL
+     */
+    const API_OAUTH_TOKEN_URL = 'https://api.instagram.com/oauth/access_token';
+
     private static string $_apikey;
 
     /**
@@ -52,7 +57,7 @@ class Instagram
      * @return void
      * @throws Exception
      */
-    public function __construct(array|string $config) {
+    public function config(array|string $config) {
         if (true === is_array($config)) {
             // if you want to access user data
             self::setApiKey($config['apiKey']);
@@ -202,6 +207,43 @@ class Instagram
             $i++;
         }
         return $posts_response;
+    }
+
+    /**
+     * Get the OAuth data of a user by the returned callback code
+     *
+     * @param string $code OAuth2 code variable (after a successful login)
+     * @param boolean [optional] $token     If it's true, only the access token will be returned
+     * @return mixed
+     * @throws Exception
+     */
+    public static function getOAuthToken(string $code, $token = false): mixed
+    {
+        $apiData = [
+            'grant_type'      => 'authorization_code',
+            'client_id'       => self::getApiKey(),
+            'client_secret'   => self::getApiSecret(),
+            'redirect_uri'    => self::getApiCallback(),
+            'code'            => $code
+        ];
+
+        $result = self::OAuthAction(query: $apiData);
+        return (false === $token) ? $result : $result->access_token;
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    private static function OAuthAction($query=null){
+        $client = new Client();
+        $resp = $client->post(self::API_OAUTH_TOKEN_URL, [
+            'headers' => [
+                'Accept'     => 'application/json'
+            ],
+            'form_params' => $query
+        ]);
+
+        return json_decode($resp->getBody());
     }
 
     /**
