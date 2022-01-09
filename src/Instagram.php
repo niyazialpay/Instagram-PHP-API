@@ -57,7 +57,7 @@ class Instagram
      * @return void
      * @throws Exception
      */
-    public function config(array|string $config) {
+    public static function config(array|string $config) {
         if (true === is_array($config)) {
             // if you want to access user data
             self::setApiKey($config['apiKey']);
