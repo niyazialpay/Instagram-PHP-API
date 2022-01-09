@@ -3,6 +3,7 @@
   "description": "PHP package for Instagram API. With this PHP package, you can view user media using the Instagram API.",
   "minimum-stability": "dev",
   "license": "MIT",
+  "keywords": ["instagram", "api"],
   "authors": [
     {
       "name": "Muhammed Niyazi ALPAY",
@@ -13,5 +14,11 @@
     "php": "^8.0",
     "ext-json": "*",
     "guzzlehttp/guzzle": "^7.0.1"
-  }
+  },
+  "autoload": {
+    "psr-4": {
+      "niyazialpay\\Instagram\\": "src"
+    }
+  },
+  "prefer-stable": true
 }
