@@ -1,13 +1,16 @@
 {
   "name": "niyazialpay/instagram",
   "description": "PHP package for Instagram API. With this PHP package, you can view user media using the Instagram API.",
+  "type": "library",
   "minimum-stability": "dev",
+  "homepage": "https://github.com/niyazialpay/Instagram-PHP-API",
   "license": "MIT",
   "keywords": ["instagram", "api"],
   "authors": [
     {
       "name": "Muhammed Niyazi ALPAY",
-      "email": "muhammed@niyazialpay.com"
+      "email": "muhammed@niyazialpay.com",
+      "homepage": "https://niyazi.net"
     }
   ],
   "require": {
