@@ -189,7 +189,27 @@ class Instagram
         return self::$_callbackurl;
     }
 
-    public static function getUserMedia($id, $limit = 10)
+    /**
+     * @throws GuzzleException
+     */
+    public static function getUserMedia($id, $limit = 10): array
+    {
+
+        return self::userMedias($id, $limit);
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    public static function getUserMediaFromHashtag($id, $hashtag, $limit = 10): array
+    {
+        return self::userMedias($id, $limit, $hashtag);
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    private static function userMedias($id, $limit=20, $hashtag=null): array
     {
         $medias_response = self::makeAction($id, [
             'fields' => 'media',
@@ -199,10 +219,20 @@ class Instagram
         $posts_response = [];
         foreach ($medias_response->media->data as $media) {
             if ($i < $limit) {
-                $posts_response[] = self::makeAction($media->id, [
+                $insta_media = self::makeAction($media->id, [
                     'fields' => 'thumbnail_url,media_url,permalink,media_type,caption',
                     'access_token' => self::getAccessToken()
                 ]);
+                if($hashtag){
+                    try{
+                        if($insta_media?->caption){
+                            if (str_contains($insta_media->caption, $hashtag)) {
+                                $posts_response[] = $insta_media;
+                            }
+                        }
+                    }
+                    catch (Exception $e){}
+                }
             }
             $i++;
         }
@@ -216,6 +246,7 @@ class Instagram
      * @param boolean [optional] $token     If it's true, only the access token will be returned
      * @return mixed
      * @throws Exception
+     * @throws GuzzleException
      */
     public static function getOAuthToken(string $code, $token = false): mixed
     {
