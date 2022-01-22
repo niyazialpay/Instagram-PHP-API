@@ -228,17 +228,18 @@ class Instagram
                         if($insta_media?->caption){
                             if (str_contains($insta_media->caption, $hashtag)) {
                                 $posts_response[] = $insta_media;
+                                $i++;
                             }
-                            $i++;
                         }
                         else continue;
                     }
                     catch (Exception $e){}
                 }
-                else
+                else{
                     $posts_response[] = $insta_media;
+                    $i++;
+                }
             }
-            $i++;
         }
         return $posts_response;
     }
