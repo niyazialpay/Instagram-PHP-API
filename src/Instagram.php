@@ -229,10 +229,14 @@ class Instagram
                             if (str_contains($insta_media->caption, $hashtag)) {
                                 $posts_response[] = $insta_media;
                             }
+                            $i++;
                         }
+                        else continue;
                     }
                     catch (Exception $e){}
                 }
+                else
+                    $posts_response[] = $insta_media;
             }
             $i++;
         }
