@@ -223,7 +223,7 @@ class Instagram
                     'fields' => 'thumbnail_url,media_url,permalink,media_type,caption',
                     'access_token' => self::getAccessToken()
                 ]);
-                if($hashtag){
+                if($hashtag!=null){
                     try{
                         if($insta_media?->caption){
                             if (str_contains($insta_media->caption, $hashtag)) {
