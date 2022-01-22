@@ -230,10 +230,14 @@ class Instagram
                                 $posts_response[] = $insta_media;
                                 $i++;
                             }
+                            else continue;
                         }
                         else continue;
+
                     }
-                    catch (Exception $e){}
+                    catch (Exception $e){
+                        continue;
+                    }
                 }
                 else{
                     $posts_response[] = $insta_media;
