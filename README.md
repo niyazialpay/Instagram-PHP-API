@@ -1,4 +1,4 @@
-##About
+## About
 
 PHP package for Instagram API. With this PHP package, you can view user media using the Instagram API.
 
